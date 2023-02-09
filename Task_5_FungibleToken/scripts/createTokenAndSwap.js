@@ -31,12 +31,12 @@ async function main() {
 	await swapTokens(client, tokenOneId, tokenTwoId, accountTwo, accountThree, 1000);
 
 
-	const accountTwoFinalBalance =  (await getBalance(client, accountTwo)).toString()
+	const accountTwoFinalBalance =  (await getTokenBalance(client, accountTwo)).toString()
 	console.log({accountTwoFinalBalance});
 
     // // await mintAndTransferNFT(client, myAccountId, myPrivateKey, adminUser, supplyUser)
 
-	const accountThreeFinalBalance = (await getBalance(client, accountThree)).toString()
+	const accountThreeFinalBalance = (await getTokenBalance(client, accountThree)).toString()
 	console.log({accountThreeFinalBalance});
     process.exit()
 }

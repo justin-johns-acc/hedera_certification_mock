@@ -100,7 +100,7 @@ export const transferToken = async (client, sender, recipient, tokenId, amount) 
 }
 
 export const getTokenBalance = async (client, account) => {
-  return (await new AccountBalanceQuery().setAccountId(account.accountID).execute(client)).tokens;
+  return (await new AccountBalanceQuery().setAccountId(account.accountID).execute(client)).tokens.toString();
 }
 
 export const swapTokens = async (client, tokenOneId, tokenTwoId, accountOne, accountTwo, amount) => {
@@ -133,10 +133,10 @@ export const swapTokens = async (client, tokenOneId, tokenTwoId, accountOne, acc
 
   // swap tokens
     let atomicSwap = new TransferTransaction()
-    .addTokenTransfer(tokenOneId, accountOne.accountID, amount)
-    .addTokenTransfer(tokenOneId, accountTwo.accountID, -amount)
-    .addTokenTransfer(tokenTwoId, accountTwo.accountID, amount)
-    .addTokenTransfer(tokenTwoId, accountOne.accountID, -amount)
+    .addTokenTransfer(tokenOneId, accountOne.accountID, -amount)
+    .addTokenTransfer(tokenOneId, accountTwo.accountID, amount)
+    .addTokenTransfer(tokenTwoId, accountTwo.accountID, -amount)
+    .addTokenTransfer(tokenTwoId, accountOne.accountID, amount)
 		.freezeWith(client);
 
 	let tokenTransferTx = await (await (await atomicSwap.sign(accountOneKey)).sign(accountTwoKey)).execute(client)
